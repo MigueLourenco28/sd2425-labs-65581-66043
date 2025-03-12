@@ -132,7 +132,7 @@ public class Discovery {
 					if (msgElems.length == 2) { // periodic announcement
 						System.out.printf("FROM %s (%s) : %s\n", pkt.getAddress().getHostName(),
 								pkt.getAddress().getHostAddress(), msg);
-						// TODO: to complete by recording the received information
+						// Complete by recording the received information
 						//-----------------------Added-----------------------//
 						// Record the received information
                         synchronized (services) {
@@ -157,7 +157,7 @@ public class Discovery {
 	 * 
 	 */
 	public URI[] knownUrisOf(String serviceName, int minReplies) {
-		// TODO: implement this method
+		// Implement this method
 		//-----------------------Added-----------------------//
 		// Waits until the minimum number of URIs is discovered or the timeout is reached.
 		List<URI> uris = new ArrayList<>();
