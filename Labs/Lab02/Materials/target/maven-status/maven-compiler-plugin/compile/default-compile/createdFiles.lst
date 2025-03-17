@@ -1,0 +1,13 @@
+lab2/clients/GetUserAvatarClient.class
+lab2/clients/SearchUserClient.class
+lab2/clients/CreateUserClient.class
+lab2/clients/GetUserClient.class
+lab2/clients/SearchUserClient$1.class
+lab2/api/service/RestUsers.class
+lab2/clients/UpdateUserAvatarClient.class
+lab2/server/resources/UsersResource.class
+lab2/server/UsersServer.class
+lab2/clients/DeleteUserAvatarClient.class
+lab2/api/User.class
+lab2/clients/DeleteUserClient.class
+lab2/clients/UpdateUserClient.class
