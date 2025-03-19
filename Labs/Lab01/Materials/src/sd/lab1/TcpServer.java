@@ -1,5 +1,3 @@
-package sd.lab1;
-
 import java.net.* ;
 import java.util.logging.Logger;
 
