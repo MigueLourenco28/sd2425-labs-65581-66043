@@ -23,9 +23,12 @@ public class TcpClient {
 		//Process the string with the server address to extract IP address and port
 
 		URI[] uris = discovery.knownUrisOf("TcpServer", 1);
+
 		URI first = uris[0];
 		int port = first.getPort();
 		String hostname = first.getHost();
+
+
 
 		//Establish a TCP connection to the server and send lines of text from standard input until input is !quit
 		try( Socket sock = new Socket( hostname, port)) {

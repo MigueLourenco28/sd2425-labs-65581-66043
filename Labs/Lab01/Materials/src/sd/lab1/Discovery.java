@@ -159,10 +159,12 @@ public class Discovery {
 	 */
 	public URI[] knownUrisOf(String serviceName, int minReplies){
 		// TODO: implement this method
-		List<URI> uris = new ArrayList<>();
-		if(services.get(serviceName) != null) {
-			uris.addAll(services.get(serviceName));;
+
+        if(services.get(serviceName) == null) {
+			return null;
 		}
+
+        List<URI> uris = new ArrayList<>(services.get(serviceName));
 
 		synchronized (lock) {
 			while(uris.size() <= minReplies) {
