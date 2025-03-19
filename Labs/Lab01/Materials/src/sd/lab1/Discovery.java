@@ -1,18 +1,8 @@
 package sd.lab1;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URI;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.*;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -20,16 +10,16 @@ import java.util.logging.Logger;
  * A class to perform service discovery, based on periodic service contact
  * endpoint announcements over multicast communication.
  * </p>
- * 
+ *
  * <p>
  * Servers announce their *name* and contact *uri* at regular intervals. The
  * server actively collects received announcements.
  * </p>
- * 
+ *
  * <p>
  * Service announcements have the following format:
  * </p>
- * 
+ *
  * <p>
  * &lt;service-name-string&gt;&lt;delimiter-char&gt;&lt;service-uri-string&gt;
  * </p>
@@ -58,17 +48,17 @@ public class Discovery {
 	private final String serviceName;
 	private final String serviceURI;
 	private final MulticastSocket ms;
-	//-----------------------Added-----------------------//
-	private final Map<String, List<URI>> services = new HashMap<>(); // Map used to store the received announcements
-	//-----------------------Added-----------------------// 
+
+	private final Dictionary<String, List<URI>> services = new Hashtable<>();
+	private static final Object lock = new Object();
 
 	/**
 	 * @param serviceName the name of the service to announce
 	 * @param serviceURI  an uri string - representing the contact endpoint of the
 	 *                    service being announced
-	 * @throws IOException 
-	 * @throws UnknownHostException 
-	 * @throws SocketException 
+	 * @throws IOException
+	 * @throws UnknownHostException
+	 * @throws SocketException
 	 */
 	Discovery(InetSocketAddress addr, String serviceName, String serviceURI) throws SocketException, UnknownHostException, IOException {
 		this.addr = addr;
@@ -77,8 +67,8 @@ public class Discovery {
 
 		if (this.addr == null) {
 			throw new RuntimeException("A multinet address has to be provided.");
-		} 
-		
+		}
+
 		this.ms = new MulticastSocket(addr.getPort());
 		this.ms.joinGroup(addr, NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
 	}
@@ -89,7 +79,7 @@ public class Discovery {
 
 	/**
 	 * Starts sending service announcements at regular intervals...
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void start() {
 		//If this discovery instance was initialized with information about a service, start the thread that makes the
@@ -132,15 +122,11 @@ public class Discovery {
 					if (msgElems.length == 2) { // periodic announcement
 						System.out.printf("FROM %s (%s) : %s\n", pkt.getAddress().getHostName(),
 								pkt.getAddress().getHostAddress(), msg);
-						// Complete by recording the received information
-						//-----------------------Added-----------------------//
-						// Record the received information
-                        synchronized (services) {
-                            services.computeIfAbsent(msgElems[0], k -> new ArrayList<>()).add(URI.create(msgElems[1]));
-                        }
-						//-----------------------Added-----------------------//
+						// TODO: to complete by recording the received information
+						addDiscoveryAddr(msgElems[0],msgElems[1]);
+
 					}
-				} catch (IOException e) {
+				} catch (IOException | URISyntaxException e) {
 					// do nothing
 				}
 			}
@@ -148,37 +134,46 @@ public class Discovery {
 	}
 
 	/**
+	 *This method is used to fill the cache that contains the information abou all the URI's that are
+	 * connected to the service (Key being the serviceName).
+	 * @param serviceName
+	 * @param serviceURI
+	 * @throws URISyntaxException
+	 */
+	private void addDiscoveryAddr (String serviceName, String serviceURI) throws URISyntaxException {
+		if(services.get(serviceName) == null) {
+			services.put(serviceName, new Stack<>());
+			services.get(serviceName).add(new URI(serviceURI));
+		}
+		else services.get(serviceName).add(new URI(serviceURI));
+	}
+
+	/**
 	 * Returns the known services.
-	 * 
+	 *
 	 * @param serviceName the name of the service being discovered
 	 * @param minReplies  - minimum number of requested URIs. Blocks until the
 	 *                    number is satisfied.
 	 * @return an array of URI with the service instances discovered.
-	 * 
+	 *
 	 */
-	public URI[] knownUrisOf(String serviceName, int minReplies) {
-		// Implement this method
-		//-----------------------Added-----------------------//
-		// Waits until the minimum number of URIs is discovered or the timeout is reached.
+	public URI[] knownUrisOf(String serviceName, int minReplies){
+		// TODO: implement this method
 		List<URI> uris = new ArrayList<>();
-        synchronized (services) {
-            while (uris.size() < minReplies) {
-                List<URI> discoveredUris = services.get(serviceName);
-                if (discoveredUris != null) {
-                    uris.addAll(discoveredUris);
-                }
-                if (uris.size() < minReplies) {
-                    try {
-                        services.wait(DISCOVERY_RETRY_TIMEOUT);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                }
-            }
-        }
-        return uris.toArray(new URI[0]);
-		//-----------------------Added-----------------------//
+		if(services.get(serviceName) != null) {
+			uris.addAll(services.get(serviceName));;
+		}
+
+		synchronized (lock) {
+			while(uris.size() <= minReplies) {
+				try {
+					lock.wait(DISCOVERY_RETRY_TIMEOUT);
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
+		}
+		return uris.toArray(new URI[0]);
 	}
 
 	// Main just for testing purposes
