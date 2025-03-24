@@ -1,0 +1,13 @@
+lab3/api/Result$ErrorCode.class
+lab3/server/resources/UsersResource.class
+lab3/api/service/RestImage.class
+lab3/server/persistence/Hibernate.class
+lab3/api/User.class
+lab3/clients/rest/RestUsersClient.class
+lab3/api/OkResult.class
+lab3/clients/CreateUserClient.class
+lab3/api/ErrorResult.class
+lab3/server/UsersServer.class
+lab3/clients/GetUserClient.class
+lab3/api/Result.class
+lab3/api/service/RestUsers.class
