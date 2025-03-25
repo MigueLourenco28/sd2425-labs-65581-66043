@@ -1,3 +1,5 @@
+package sd.lab1;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
@@ -138,13 +140,16 @@ public class Discovery {
 	 * @param serviceURI
 	 * @throws URISyntaxException
 	 */
-	private void addDiscoveryAddr (String serviceName, String serviceURI) throws URISyntaxException {
-		if(services.get(serviceName) == null) {
-			services.put(serviceName, new Stack<>());
+	private void addDiscoveryAddr(String serviceName, String serviceURI) throws URISyntaxException {
+		synchronized (lock) {
+			if (services.get(serviceName) == null) {
+				services.put(serviceName, new ArrayList<URI>());
+			}
 			services.get(serviceName).add(new URI(serviceURI));
+			lock.notifyAll();
 		}
-		else services.get(serviceName).add(new URI(serviceURI));
 	}
+
 
 	/**
 	 * Returns the known services.
@@ -157,23 +162,19 @@ public class Discovery {
 	 */
 	public URI[] knownUrisOf(String serviceName, int minReplies){
 		// TODO: implement this method
-
-        if(services.get(serviceName) == null) {
-			return null;
-		}
-
-        List<URI> uris = new ArrayList<>(services.get(serviceName));
-
 		synchronized (lock) {
-			while(uris.size() <= minReplies) {
+			while(services.get(serviceName) == null || services.get(serviceName).size() < minReplies) {
 				try {
-					lock.wait(DISCOVERY_RETRY_TIMEOUT);
+					lock.wait();
 				} catch (InterruptedException e) {
 					break;
 				}
 			}
+			int size = services.get(serviceName).size();
+			URI[] uris = new URI[size];
+			uris = services.get(serviceName).toArray(uris);
+			return uris;
 		}
-		return uris.toArray(new URI[0]);
 	}
 
 	// Main just for testing purposes
