@@ -1,8 +1,10 @@
+package sd.lab1;
+
 import java.net.* ;
 import java.util.logging.Logger;
 
 /**
- * Basic TCP server... 
+ * Basic TCP server...
  *
  */
 public class TcpServer {
@@ -19,6 +21,7 @@ public class TcpServer {
         String serviceName="TcpServer";
         Discovery discovery = new Discovery(Discovery.DISCOVERY_ADDR,serviceName,URI);
         discovery.start();
+        System.out.println("Server started");
 
         //Create a server socket and wait for incoming TCP connections from client
         try(ServerSocket ssocket = new ServerSocket( PORT )) {
@@ -26,6 +29,7 @@ public class TcpServer {
             Log.info("Accepting connections at: " + ssocket.getLocalSocketAddress() ) ;
             while( true ) {
                 Socket csocket = ssocket.accept() ;
+                System.out.println(1);
 
                 System.err.println("Accepted connection from client at: " + csocket.getRemoteSocketAddress() ) ;
 
