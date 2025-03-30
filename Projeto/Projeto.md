@@ -32,3 +32,35 @@ Critérios de Avaliação
 - Suporte a falhas temporárias de comunicação.
 - Código bem estruturado e seguindo boas práticas.
 - Implementação correta da auto-configuração.
+
+Tarefas:
+- Users Service (Gestão de Utilizadores)
+Criar um utilizador;
+Obter informação de um utilizador;
+Modificar um utilizador;
+Remover um utilizador;
+Pesquisar utilizadores.
+- Content Service (Gestão de Conteúdos do Fórum)
+Criar nova entrada/resposta;
+Obter entradas de topo;
+Criar resposta a uma entrada;
+Obter respostas de uma entrada;
+Obter conteúdo de uma entrada;
+Remover entrada/resposta;
+Adicionar/remover up-vote e down-vote;
+Operações opcionais: contagem de votos, entradas mais votadas, leitura bloqueante para novas respostas.
+- Image Service (Gestão de Imagens)
+Armazenar e fornecer avatares e imagens associadas aos conteúdos;
+Remover imagens quando o conteúdo for apagado.
+
+- Ficheiros a Criar/Modificar
+No projeto Maven fornecido (sd2425-proj-api.zip), precisas de criar/alterar ficheiros Java para implementar as operações mencionadas nos serviços REST e gRPC.
+
+- Criar:
+Implementações dos serviços REST e gRPC para Users, Content e Images.
+Classes para a auto-configuração via multicast.
+Classes de manipulação de dados, armazenamento e lógica de negócio.
+
+- Modificar:
+Interfaces pré-definidas no projeto, apenas adicionando operações opcionais ou parâmetros opcionais.
+Qualquer código necessário para garantir a comunicação entre os serviços REST/gRPC.
