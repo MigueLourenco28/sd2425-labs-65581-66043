@@ -77,15 +77,55 @@ public class UsersResource implements RestUsers {
 	@Override
 	public User updateUser(String userId, String password, User user) {
 		Log.info("updateUser : user = " + userId + "; pwd = " + password + " ; userData = " + user);
-		// TODO: Complete method
-		throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+		//---------------Added code------------------//
+		if (userId == null || password == null || user == null) { // Check if userId, password or user is null
+            Log.info("Invalid input.");
+            throw new WebApplicationException(Status.BAD_REQUEST);
+        }
+
+        User existingUser = getUser(userId, password);
+        
+        if (user.getFullName() != null) {
+            existingUser.setFullName(user.getFullName());
+        }
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+        if (user.getPassword() != null) {
+            existingUser.setPassword(user.getPassword());
+        }
+
+        try {
+            hibernate.update(existingUser); // Update the user in the database
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
+        }
+
+        return existingUser;
+		//---------------End of added code------------------//
 	}
 
 	@Override
 	public User deleteUser(String userId, String password) {
 		Log.info("deleteUser : user = " + userId + "; pwd = " + password);
-		// TODO: Complete method
-		throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+		//---------------Added code------------------//
+		if (userId == null || password == null) {
+            Log.info("Invalid input.");
+            throw new WebApplicationException(Status.BAD_REQUEST);
+        }
+
+        User user = getUser(userId, password);
+
+        try {
+            hibernate.delete(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
+        }
+
+        return user;
+		//---------------End of added code------------------//
 	}
 
 	@Override
