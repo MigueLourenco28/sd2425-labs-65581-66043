@@ -10,16 +10,16 @@ import java.util.logging.Logger;
  * A class to perform service discovery, based on periodic service contact
  * endpoint announcements over multicast communication.
  * </p>
- *
+ * 
  * <p>
- * Servers announce their *name* and contact *uri* at regular intervals. The
+ * Servers announce their name and contact uri at regular intervals. The
  * server actively collects received announcements.
  * </p>
- *
+ * 
  * <p>
  * Service announcements have the following format:
  * </p>
- *
+ * 
  * <p>
  * &lt;service-name-string&gt;&lt;delimiter-char&gt;&lt;service-uri-string&gt;
  * </p>
@@ -56,9 +56,9 @@ public class Discovery {
 	 * @param serviceName the name of the service to announce
 	 * @param serviceURI  an uri string - representing the contact endpoint of the
 	 *                    service being announced
-	 * @throws IOException
-	 * @throws UnknownHostException
-	 * @throws SocketException
+	 * @throws IOException 
+	 * @throws UnknownHostException 
+	 * @throws SocketException 
 	 */
 	Discovery(InetSocketAddress addr, String serviceName, String serviceURI) throws SocketException, UnknownHostException, IOException {
 		this.addr = addr;
@@ -67,8 +67,8 @@ public class Discovery {
 
 		if (this.addr == null) {
 			throw new RuntimeException("A multinet address has to be provided.");
-		}
-
+		} 
+		
 		this.ms = new MulticastSocket(addr.getPort());
 		this.ms.joinGroup(addr, NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
 	}
@@ -79,7 +79,7 @@ public class Discovery {
 
 	/**
 	 * Starts sending service announcements at regular intervals...
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	public void start() {
 		//If this discovery instance was initialized with information about a service, start the thread that makes the
@@ -153,12 +153,12 @@ public class Discovery {
 
 	/**
 	 * Returns the known services.
-	 *
+	 * 
 	 * @param serviceName the name of the service being discovered
 	 * @param minReplies  - minimum number of requested URIs. Blocks until the
 	 *                    number is satisfied.
 	 * @return an array of URI with the service instances discovered.
-	 *
+	 * 
 	 */
 	public URI[] knownUrisOf(String serviceName, int minReplies){
 		// TODO: implement this method

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "lab4.impl.server.grpc.generated_java";
+option java_outer_classname = "ImageProtoBuf";
+
+service Image {
+	
+	rpc createImage( CreateImageArgs ) returns ( CreateImageResult ) {}
+	
+	rpc getImage( ImageArgs ) returns ( stream GetImageResult ) {}
+
+	rpc deleteImage( ImageArgs ) returns ( DeleteImageResult ) {}
+	 
+}
+
+message CreateImageArgs {
+	bytes imageContents = 1;
+}
+
+message CreateImageResult {
+	string imageId = 1;
+}
+
+message ImageArgs {
+	string imageId = 1;
+}
+
+message GetImageResult {
+	bytes data = 1;
+}
+
+message DeleteImageResult {
+}
