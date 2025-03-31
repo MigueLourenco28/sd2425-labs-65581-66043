@@ -25,4 +25,4 @@ COPY example.png example.png
 COPY target/*jar-with-dependencies.jar sd2425.jar
 
 # run Discovery when starting the docker image
-CMD ["java", "-cp", "sd2425.jar", "lab4.server.grpc.UsersServer"]
+CMD ["java", "-cp", "sd2425.jar", "lab4.impl.server.grpc.UsersServer"]

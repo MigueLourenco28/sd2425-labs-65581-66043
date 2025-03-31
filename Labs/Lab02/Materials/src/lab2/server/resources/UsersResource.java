@@ -86,22 +86,9 @@ public class UsersResource implements RestUsers {
 
         User existingUser = getUser(userId, password);
         
-        if (user.getFullName() != null) {
-            existingUser.setFullName(user.getFullName());
-        }
-        if (user.getEmail() != null) {
-            existingUser.setEmail(user.getEmail());
-        }
-        if (user.getPassword() != null) {
-            existingUser.setPassword(user.getPassword());
-        }
-
-        try {
-            hibernate.update(existingUser); // Update the user in the database
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
-        }
+        if (user.getFullName() != null) {existingUser.setFullName(user.getFullName());}
+        if (user.getEmail() != null) {existingUser.setEmail(user.getEmail());}
+        if (user.getPassword() != null) {existingUser.setPassword(user.getPassword());}
 
         return existingUser;
 		//---------------End of added code------------------//
@@ -117,14 +104,7 @@ public class UsersResource implements RestUsers {
         }
 
         User user = getUser(userId, password);
-
-        try {
-            hibernate.delete(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
-        }
-
+		users.remove(userId);
         return user;
 		//---------------End of added code------------------//
 	}
@@ -133,9 +113,10 @@ public class UsersResource implements RestUsers {
 	public List<User> searchUsers(String pattern) {
 		Log.info("searchUsers : pattern = " + pattern);
 		//---------------Added code------------------//
-		return users.values().stream()
-                .filter(user -> user.getUserId().contains(pattern))
-                .collect(Collectors.toList());
+		return users.values()
+					.stream()
+        			.filter(user -> user.getUserId().contains(pattern) || user.getFullName().contains(pattern))
+        			.toList();
 		//---------------End of added code------------------//
 	}
 
@@ -165,6 +146,7 @@ public class UsersResource implements RestUsers {
 		//---------------Added code------------------//
 		getUser(userId, password);
         Path pathToFile = Paths.get(AVATAR_DIRECTORY, userId + ".png");
+		
         try {
             Files.deleteIfExists(pathToFile);
         } catch (Exception e) {

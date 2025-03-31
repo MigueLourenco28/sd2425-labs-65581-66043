@@ -18,6 +18,8 @@ public class CreateUserClient {
 
 	public static void main(String[] args) throws IOException {
 		
+		//TODO: Implement Discovery
+
 		if( args.length != 5) {
 			System.err.println( "Use: java " + CreateUserClient.class.getCanonicalName() + " url userId fullName email password");
 			return;

@@ -1,4 +1,4 @@
-package sd.lab1;
+package lab2;
 
 import java.io.IOException;
 import java.net.*;
@@ -60,7 +60,7 @@ public class Discovery {
 	 * @throws UnknownHostException
 	 * @throws SocketException
 	 */
-	Discovery(InetSocketAddress addr, String serviceName, String serviceURI) throws SocketException, UnknownHostException, IOException {
+	public Discovery(InetSocketAddress addr, String serviceName, String serviceURI) throws SocketException, UnknownHostException, IOException {
 		this.addr = addr;
 		this.serviceName = serviceName;
 		this.serviceURI = serviceURI;
@@ -73,7 +73,7 @@ public class Discovery {
 		this.ms.joinGroup(addr, NetworkInterface.getByInetAddress(InetAddress.getLocalHost()));
 	}
 
-	Discovery(InetSocketAddress addr) throws SocketException, UnknownHostException, IOException {
+	public Discovery(InetSocketAddress addr) throws SocketException, UnknownHostException, IOException {
 		this(addr, null, null);
 	}
 
