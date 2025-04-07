@@ -90,6 +90,8 @@ public class UsersResource implements RestUsers {
         if (user.getEmail() != null) {existingUser.setEmail(user.getEmail());}
         if (user.getPassword() != null) {existingUser.setPassword(user.getPassword());}
 
+		Log.info("User updated: " + existingUser.getUserId());
+
         return existingUser;
 		//---------------End of added code------------------//
 	}

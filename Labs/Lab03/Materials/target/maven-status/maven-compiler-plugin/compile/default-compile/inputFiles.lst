@@ -3,8 +3,15 @@
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/api/service/RestImage.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/api/service/RestUsers.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/CreateUserClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/DeleteUserAvatarClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/DeleteUserClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/GetUserAvatarClient.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/GetUserClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/SearchUserClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/UpdateUserAvatarClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/UpdateUserClient.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/clients/rest/RestUsersClient.java
+/home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/server/AvatarServer.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/server/UsersServer.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/server/persistence/Hibernate.java
 /home/mse_lourenco/Uni/SD/P/SD_24-25_65581_66043/Labs/Lab03/Materials/src/lab3/server/resources/UsersResource.java

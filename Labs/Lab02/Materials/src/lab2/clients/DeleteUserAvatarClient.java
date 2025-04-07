@@ -31,7 +31,23 @@ public class DeleteUserAvatarClient {
 
 		System.out.println("Sending request to server.");
 		
-		//TODO: Complete the client code
+		//----------------Added code------------------//
+		ClientConfig config = new ClientConfig();
+        Client client = ClientBuilder.newClient(config);
+
+        WebTarget target = client.target( serverUrl ).path( RestUsers.PATH );
+
+
+        Response r = target.path( userId ).path( RestUsers.AVATAR )
+                .queryParam(RestUsers.PASSWORD, password).request()
+                .delete();
+
+
+        if( r.getStatus() == Status.NO_CONTENT.getStatusCode() )
+            System.out.println("User Avatar deleted.");
+        else
+            System.out.println("Error, HTTP error status: " + r.getStatus() );
+		//---------------------------------------------//
 	}
 	
 }
