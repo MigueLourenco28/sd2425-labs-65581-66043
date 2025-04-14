@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import lab4.impl.server.rest.resources.UsersResource;
+
 public class UsersServer {
 
 	private static Logger Log = Logger.getLogger(UsersServer.class.getName());

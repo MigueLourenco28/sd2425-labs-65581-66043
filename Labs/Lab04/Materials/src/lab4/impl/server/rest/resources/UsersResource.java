@@ -1,4 +1,4 @@
-package lab4.impl.server.rest;
+package lab4.impl.server.rest.resources;
 
 import java.util.List;
 import java.util.logging.Logger;

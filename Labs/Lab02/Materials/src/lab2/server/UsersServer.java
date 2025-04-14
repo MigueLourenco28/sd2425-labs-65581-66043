@@ -23,9 +23,6 @@ public class UsersServer {
 	private static final String SERVER_URI_FMT = "http://%s:%s/rest";
 	
 	public static void main(String[] args) {
-
-		//TODO: Implement Discovery
-
 		try {
 			
 		ResourceConfig config = new ResourceConfig();
